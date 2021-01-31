@@ -40,6 +40,9 @@ public class ControllerViewTest {
     @Autowired
     Server server;
 
+    @Autowired
+    ControllerView controllerView;
+
     @Test
     void creatRoom() throws URISyntaxException {
         String name = "Alex";
@@ -68,10 +71,9 @@ public class ControllerViewTest {
     //Тестирует работу при участии двух пользователей
     @Test
     public void setHashUserTwo() throws URISyntaxException {
-        this.creatRoom();   //Создаём комнату
-        this.login();       //Регистрируем двух пользователей
-        this.login();       //Регистрируем двух пользователей
-        for(int i = 0 ; i < 2; i++){
+        this.creatRoom();   //Создаём комнату и регистрируем 1 пользователя
+        this.login();       //Регистрируем второго пользователя
+        for(int i = 0 ; i < 150; i++){
             this.setHash();
             if(numberUser.equals("0")){
                 numberUser = "1";
@@ -79,7 +81,7 @@ public class ControllerViewTest {
                 numberUser = "0";
             }
         }
-
+        this.viewHashs();
     }
 
     @Test
@@ -98,5 +100,15 @@ public class ControllerViewTest {
 
     @Test
     void viewHashs() {
+        List<Map.Entry<String, Room>> list = new ArrayList<>(server.getRooms().entrySet());
+        Map.Entry<String, Room> firstInsertedEntry = list.get(0);   //Получаем первую комнату
+        String codeRoom = firstInsertedEntry.getKey();
+
+        String resp = "";
+        HttpEntity<String> entity = new HttpEntity<String>(resp);
+        ResponseEntity<String> response = restTemplate.exchange("/server/view/{codeRoom}",
+                HttpMethod.POST, entity, String.class, codeRoom);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 }

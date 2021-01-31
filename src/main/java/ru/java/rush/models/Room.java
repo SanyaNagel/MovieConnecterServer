@@ -46,7 +46,7 @@ public class Room {
     public void displayHashUsers(){
         Set<Integer> keys = users.keySet();
         for(Integer id : keys){
-            System.out.print("\n\t\t\t\t\t\t\t"+id);
+            System.out.print("\t\t\t\t\t\t\t"+id);
         }
         System.out.println();
 
