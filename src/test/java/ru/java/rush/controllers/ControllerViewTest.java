@@ -3,23 +3,15 @@ package ru.java.rush.controllers;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.TestComponent;
 import org.springframework.boot.test.web.client.TestRestTemplate;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Component;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.client.RestTemplate;
 import ru.java.rush.models.Room;
-import ru.java.rush.service.Server;
+import ru.java.rush.service.ControllerWork;
 
-import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +30,7 @@ public class ControllerViewTest {
     private String hash = "11111111";
 
     @Autowired
-    Server server;
+    ControllerWork controllerWork;
 
     @Autowired
     ControllerView controllerView;
@@ -56,7 +48,7 @@ public class ControllerViewTest {
 
     @Test
     void setHash() throws URISyntaxException {
-        List<Map.Entry<String, Room>> list = new ArrayList<>(server.getRooms().entrySet());
+        List<Map.Entry<String, Room>> list = new ArrayList<>(controllerWork.getRooms().entrySet());
         Map.Entry<String, Room> firstInsertedEntry = list.get(0);   //Получаем первую комнату
         String codeRoom = firstInsertedEntry.getKey();
 
@@ -86,7 +78,7 @@ public class ControllerViewTest {
 
     @Test
     void login() throws URISyntaxException {
-        List<Map.Entry<String, Room>> list = new ArrayList<>(server.getRooms().entrySet());
+        List<Map.Entry<String, Room>> list = new ArrayList<>(controllerWork.getRooms().entrySet());
         Map.Entry<String, Room> firstInsertedEntry = list.get(0);   //Получаем первую комнату
         String codeRoom = firstInsertedEntry.getKey();
 
@@ -100,7 +92,7 @@ public class ControllerViewTest {
 
     @Test
     void viewHashs() {
-        List<Map.Entry<String, Room>> list = new ArrayList<>(server.getRooms().entrySet());
+        List<Map.Entry<String, Room>> list = new ArrayList<>(controllerWork.getRooms().entrySet());
         Map.Entry<String, Room> firstInsertedEntry = list.get(0);   //Получаем первую комнату
         String codeRoom = firstInsertedEntry.getKey();
 

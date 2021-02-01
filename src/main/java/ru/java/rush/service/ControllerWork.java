@@ -11,27 +11,9 @@ import ru.java.rush.models.User;
 import java.util.HashMap;
 import java.util.Map;
 
-@Component("server")
-public class Server {
+@Component("serverWork")
+public class ControllerWork {
     private String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvxyz";
-    private String port = "8080";
-    private String host = "localhost";
-
-    public void setPort(String port) {
-        this.port = port;
-    }
-
-    public void setHost(String host) {
-        this.host = host;
-    }
-
-    public String getPort() {
-        return port;
-    }
-
-    public String getHost() {
-        return host;
-    }
 
     private int ROOM_COUNT = 0;
 
@@ -42,7 +24,7 @@ public class Server {
     private Map<String, Room> rooms = new HashMap<String, Room>();
 
 
-    public Server() {
+    public ControllerWork() {
 
     }
 
