@@ -17,12 +17,10 @@ public class ControllerWork {
 
     private int ROOM_COUNT = 0;
 
+    private Map<String, Room> rooms = new HashMap<String, Room>();
     public Map<String, Room> getRooms() {
         return rooms;
     }
-
-    private Map<String, Room> rooms = new HashMap<String, Room>();
-
 
     public ControllerWork() {
 

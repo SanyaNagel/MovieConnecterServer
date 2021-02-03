@@ -12,7 +12,7 @@ public class MapQueue extends ArrayList<Pair<Long, String>>{
 
     @Override
     public boolean add(Pair<Long, String> longStringPair) {
-        if(super.size() > maxSize){
+        if(super.size() >= maxSize){
             super.remove(0);
         }
         return super.add(longStringPair);

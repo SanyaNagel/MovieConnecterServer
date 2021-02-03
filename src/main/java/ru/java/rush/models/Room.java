@@ -10,17 +10,12 @@ import java.util.Set;
 
 public class Room {
     private String code;
-    private Map<Integer, User> users = new HashMap<Integer, User>();;
+
+    private Map<Integer, User> users = new HashMap<Integer, User>();
     private int USER_COUNT = 0;
-    private User admin;
 
     public Room(String code){
         this.code = code;
-    }
-
-    public User setAdmin(String nameAdmin){
-        this.admin = setUser(nameAdmin);
-        return admin;
     }
 
     public User setUser(String nameUser){
@@ -60,5 +55,9 @@ public class Room {
             System.out.println();
         }
 
+    }
+
+    public Map<Integer, User> getUsers() {
+        return users;
     }
 }

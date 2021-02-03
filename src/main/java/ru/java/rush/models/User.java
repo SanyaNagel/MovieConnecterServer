@@ -5,8 +5,8 @@ import ru.java.rush.models.structure.Pair;
 
 public class User {
     private String name;
-    private int id;
-    private MapQueue hash;  //Структура хранящая (время, хэш)
+    private final int id;
+    private final MapQueue hash;  //Структура хранящая (время, хэш)
 
     public User(String name, int number){
         this.name = name;

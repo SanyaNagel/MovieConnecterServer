@@ -90,7 +90,6 @@ public class ControllerViewTest {
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
-    @Test
     void viewHashs() {
         List<Map.Entry<String, Room>> list = new ArrayList<>(controllerWork.getRooms().entrySet());
         Map.Entry<String, Room> firstInsertedEntry = list.get(0);   //Получаем первую комнату
