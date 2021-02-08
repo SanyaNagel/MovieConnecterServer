@@ -36,11 +36,11 @@ public class ControllerView {
 
     //Отправка статуса готовности пользователя комнаты
     @PutMapping("/ready/{code}/{id}/{flag}")
-    public ResponseEntity<HttpStatus> setReady(@PathVariable("code") String code,
+    public ResponseEntity<String> setReady(@PathVariable("code") String code,
                                                @PathVariable("id") int id,
                                                @PathVariable("flag") boolean ready){
         controllerWork.setReadyUser(code,id,ready); //Отправляем юзеру статус готовности
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>("",HttpStatus.OK);
     }
 
     //Отладка

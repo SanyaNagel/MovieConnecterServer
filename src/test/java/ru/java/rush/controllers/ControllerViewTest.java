@@ -16,6 +16,7 @@ import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
@@ -60,11 +61,31 @@ public class ControllerViewTest {
         Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
     }
 
+    @Test
+    public void setReady() throws URISyntaxException {
+        List<Map.Entry<String, Room>> list = new ArrayList<>(controllerWork.getRooms().entrySet());
+        Map.Entry<String, Room> firstInsertedEntry = list.get(0);   //Получаем первую комнату
+        String codeRoom = firstInsertedEntry.getKey();
+
+        String resp = "";
+        String flag = "True";
+        HttpEntity<String> entity = new HttpEntity<String>(resp);
+        ResponseEntity<String> response = restTemplate.exchange("/server/ready/{codeRoom}/{numberUser}/{flag}",
+                HttpMethod.PUT, entity, String.class, codeRoom,numberUser,flag);
+
+        Assertions.assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+
     //Тестирует работу при участии двух пользователей
     @Test
-    public void setHashUserTwo() throws URISyntaxException {
+    public void setHashUserTwo() throws URISyntaxException, InterruptedException {
         this.creatRoom();   //Создаём комнату и регистрируем 1 пользователя
         this.login();       //Регистрируем второго пользователя
+        numberUser = "0";
+        setReady();
+        numberUser = "1";
+        setReady();
         for(int i = 0 ; i < 150; i++){
             this.setHash();
             if(numberUser.equals("0")){
@@ -72,6 +93,7 @@ public class ControllerViewTest {
             }else{
                 numberUser = "0";
             }
+            TimeUnit.SECONDS.sleep(500);
         }
         this.viewHashs();
     }

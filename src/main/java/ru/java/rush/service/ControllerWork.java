@@ -27,7 +27,7 @@ public class ControllerWork {
     }
 
     public ResponseEntity<String> creatRoom(String userAdmin) {
-        String code = generationCodeRoom()+ROOM_COUNT;    //Рандомный код + порядковый номер комнаты
+        String code = generationCodeRoom()+ROOM_COUNT++;    //Рандомный код + порядковый номер комнаты
         Room room = new Room(code);
         User user = room.setUser(userAdmin);
         rooms.put(code, room);

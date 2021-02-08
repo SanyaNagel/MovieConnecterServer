@@ -85,6 +85,7 @@ public class Room {
             }
             respons += "\n";
         }
+        System.out.println(respons);
         return respons;
     }
 
