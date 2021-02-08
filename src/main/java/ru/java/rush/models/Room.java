@@ -67,23 +67,25 @@ public class Room {
     }
 
     //Отображение всех хэшей пользователей для отладки
-    public void displayHashUsers(){
+    public String displayHashUsers(){
         Set<Integer> keys = users.keySet();
+        String respons = "";
         for(Integer id : keys){
-            System.out.print("\t\t\t\t\t\t\t"+id);
+            respons += "\t\t\t\t\t\t\t"+id;
         }
-        System.out.println();
+
+        respons +="\n";
 
         ArrayList<User> values = new ArrayList<>(users.values());
         for(int i = 50-1; i >= 0; --i){
             for(User user : values){
                 Pair<Long, String> hashCurrent = user.getHasIx(i);
-                System.out.print(hashCurrent.fst + "\t" + hashCurrent.snd);
-                System.out.print("\t\t\t");
+                respons += hashCurrent.fst + "\t" + hashCurrent.snd;
+                respons += "\t\t\t";
             }
-            System.out.println();
+            respons += "\n";
         }
-
+        return respons;
     }
 
     public Map<Integer, User> getUsers() {

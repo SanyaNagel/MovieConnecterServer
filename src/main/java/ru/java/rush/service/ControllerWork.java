@@ -59,7 +59,7 @@ public class ControllerWork {
 
 
     //Отображение всех хешей пользователей
-    public void displayHashs(String codeRoom){
-        rooms.get(codeRoom).displayHashUsers();
+    public String displayHashs(String codeRoom){
+        return rooms.get(codeRoom).displayHashUsers();
     }
 }

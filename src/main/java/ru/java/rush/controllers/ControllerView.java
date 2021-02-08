@@ -46,8 +46,7 @@ public class ControllerView {
     //Отладка
     @PostMapping("/view/{code}")
     public ResponseEntity<String> viewHashs(@PathVariable("code") String code){
-        controllerWork.displayHashs(code);
-        return  new ResponseEntity<>("", HttpStatus.OK);
+        return new ResponseEntity<>(controllerWork.displayHashs(code),HttpStatus.OK);
     }
 
 }
