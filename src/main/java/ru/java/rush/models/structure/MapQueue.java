@@ -3,6 +3,7 @@ package ru.java.rush.models.structure;
 
 import java.util.ArrayList;
 
+//Структура хранящая очередь пар - map очередь
 public class MapQueue extends ArrayList<Pair<Long, String>>{
     private int maxSize;
 

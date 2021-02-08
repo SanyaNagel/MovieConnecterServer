@@ -52,6 +52,12 @@ public class ControllerWork {
         return rooms.get(codeRoom).setHash(id,hash);
     }
 
+    //Отправка пользователю флага готовности
+    public void setReadyUser(String codeRoom,int id,boolean ready){
+        rooms.get(codeRoom).getUsers().get(id).setReady(ready);
+    }
+
+
     //Отображение всех хешей пользователей
     public void displayHashs(String codeRoom){
         rooms.get(codeRoom).displayHashUsers();

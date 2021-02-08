@@ -23,7 +23,7 @@ public class ControllerView {
                           @PathVariable("id") int id,
                           @PathVariable("hash") String hash,
                           Model model){
-        return  new ResponseEntity<>("{\"command\" : \""+ controllerWork.setHash(code,id,hash)+"\"}", HttpStatus.OK);
+        return new ResponseEntity<>("{\"command\" : \""+ controllerWork.setHash(code,id,hash)+"\"}", HttpStatus.OK);
     }
 
     //Подключение к комнате и добавление пользователя в комнату
@@ -31,10 +31,19 @@ public class ControllerView {
     public ResponseEntity<String> login(@PathVariable("code") String code,
                                         @PathVariable("name") String name,
                                         Model model){
-        return  new ResponseEntity<>("{\"id\" : \""+ controllerWork.login(code,name)+"\"}", HttpStatus.OK);
+        return new ResponseEntity<>("{\"id\" : \""+ controllerWork.login(code,name)+"\"}", HttpStatus.OK);
     }
 
-    //Отоладка
+    //Отправка статуса готовности пользователя комнаты
+    @PutMapping("/ready/{code}/{id}/{flag}")
+    public ResponseEntity<HttpStatus> setReady(@PathVariable("code") String code,
+                                               @PathVariable("id") int id,
+                                               @PathVariable("flag") boolean ready){
+        controllerWork.setReadyUser(code,id,ready); //Отправляем юзеру статус готовности
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+    //Отладка
     @PostMapping("/view/{code}")
     public ResponseEntity<String> viewHashs(@PathVariable("code") String code){
         controllerWork.displayHashs(code);

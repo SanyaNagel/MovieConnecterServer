@@ -8,6 +8,12 @@ public class User {
     private final int id;
     private final MapQueue hash;  //Структура хранящая (время, хэш)
 
+    public boolean isReady() {
+        return ready;
+    }
+
+    private boolean ready = false; //Флаг готовности усатника комнаты
+
     public User(String name, int number){
         this.name = name;
         this.id = number;
@@ -21,6 +27,10 @@ public class User {
     //Записываем хэш в список
     public void setHash(Long time, String hash) {
         this.hash.add(new Pair<>(time, hash));
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
     public Pair<Long, String> getHasIx(int ix){

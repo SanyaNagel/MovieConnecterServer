@@ -13,7 +13,7 @@ public class Room {
 
     private Map<Integer, User> users = new HashMap<Integer, User>();
     private int USER_COUNT = 0;
-
+    private String currentCommand = "Ожидаем готовности всех";
     public Room(String code){
         this.code = code;
     }
@@ -25,16 +25,45 @@ public class Room {
     }
 
     public String setHash(Integer id, String hash){
+        String command = getCommand(id);
+        if(command == "Кидай хэш")  //Если можно сохранять хэш то записываем его
+            users.get(id).setHash(System.currentTimeMillis(),hash);
 
-        users.get(id).setHash(System.currentTimeMillis(),hash);
+        return command;
+    }
 
-        return getCommand(id);
+    //Функция контроля синхронизации
+    public String syncing(int id){
+
+        return "Кидай хэш";
     }
 
     public String getCommand(int id){
+        switch (currentCommand){
+            case "Кидай хэш":
+                return syncing(id);
 
+            case "Ожидаем готовности всех":
+                //Проверяем готовы ли все
+                ArrayList<User> values = new ArrayList<>(users.values());
+                boolean start = true;
+                for(User user : values){
+                    if (!user.isReady()){   //Если какой то "из" не готов, то мы -
+                        start = false;      //Не запускаем
+                        break;
+                    }
+                }
+                if(start)
+                    currentCommand = "Кидай хэш";   //Все участники готовы и им даётся команда начать передачу хэшей
+                return currentCommand;
 
-        return "resume";    //Комманда продолжить
+            case "Индивидуальные комманды":
+
+                break;
+
+            default: return "Ошибка, данной команды не существует код: 11";
+        }
+        return "Ошибка команды код: 22";
     }
 
     //Отображение всех хэшей пользователей для отладки
