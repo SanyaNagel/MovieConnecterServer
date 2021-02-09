@@ -93,7 +93,7 @@ public class ControllerViewTest {
             }else{
                 numberUser = "0";
             }
-            TimeUnit.SECONDS.sleep(500);
+            TimeUnit.MILLISECONDS.sleep(500);
         }
         this.viewHashs();
     }
