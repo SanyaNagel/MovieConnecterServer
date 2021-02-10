@@ -38,6 +38,10 @@ public class Room {
         ArrayList<User> values = new ArrayList<>(users.values());
         User user1 = values.get(0);
 
+        //Если у нас недостаточно хэшей т.е. прога только что запустилась
+        if(user1.getSizeHashMap() < 20)
+            return "Кидай хэш"; //Тогда пускай докидывает хэши
+
         Pair<Long, String> pair1 = user1.getHasIx(0);
         Pair<Long, String> pairCurrent = user1.getHasIx(0);
         boolean synchroniz = false;
@@ -121,7 +125,7 @@ public class Room {
                         ful = false;
                 }
                 if(ful) //Если все запущены
-                    currentCommand = "Кидаем хэш";
+                    currentCommand = "Кидай хэш";
                 return users.get(id).getIndividualCommand();
 
             case "Индивидуальные комманды":

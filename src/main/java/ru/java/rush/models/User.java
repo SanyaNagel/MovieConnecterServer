@@ -51,4 +51,8 @@ public class User {
     public Pair<Long, String> getHasIx(int ix){
         return hash.get(ix);
     }
+
+    public int getSizeHashMap(){
+        return hash.size();
+    }
 }
