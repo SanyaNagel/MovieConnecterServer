@@ -7,6 +7,7 @@ public class User {
     private String name;
     private final int id;
     private final MapQueue hash;  //Структура хранящая (время, хэш)
+    public String individualCommand = "Остановка";    //Индивидуальная команда для пользователя
 
     public boolean isReady() {
         return ready;

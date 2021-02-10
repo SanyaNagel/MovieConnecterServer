@@ -34,8 +34,59 @@ public class Room {
 
     //Функция контроля синхронизации
     public String syncing(int id){
+        //Проверим есть ли хотябы один одинаковый кадр за последнюю секунду
+        ArrayList<User> values = new ArrayList<>(users.values());
+        User user1 = values.get(0);
 
-        return "Кидай хэш";
+        Pair<Long, String> pair1 = user1.getHasIx(0);
+        Pair<Long, String> pairCurrent = user1.getHasIx(0);
+        boolean synchroniz = false;
+        // Берём первого пользователя и проверяем -
+        // за последнюю секунду у всех пользователей имеется похожий хэш
+        for(int i = 0; pair1.fst - pairCurrent.fst > 1000; ++i){
+            pairCurrent = user1.getHasIx(i);
+            int be = 0;
+
+            //Проверка - есть ли такой хэш в последней секунде у каждого пользователя
+            for(User user : values){
+                Long hashFirst = user.getHasIx(0).fst;
+                Pair<Long, String> hashCurrent = user.getHasIx(0);
+                for(int j = 0; hashFirst - hashCurrent.fst > 1000; ++j){
+                    hashCurrent = user.getHasIx(j);
+                    if(hashCurrent.snd.equals(pairCurrent.snd)){
+                        ++be;
+                    }
+                }
+            }
+            if(be == values.size()) { //У всех пользователей нашёлся одинаковый хэш
+                synchroniz = true;
+                break;
+            }
+        }
+        // Усли все пользователи синхронизированы -
+        // У всех нашёлся одинаковый хэш
+        if(synchroniz){
+            currentCommand = "Кидай хэш"; //для всех устанавливае команду
+            return "Кидай хэш"; //То можно продолжать работу
+        }
+
+        //Иначе устанавливаем команды для каждого пользователя
+        currentCommand = "Индивидуальные комманды";
+
+        //Устанавливаем индивидуальные команды
+        searchForLatecomer();
+
+        return values.get(id).individualCommand;
+    }
+
+    // Поиск опоздавшего пользователя и
+    // установка индивидуальных команд
+    public void searchForLatecomer(){
+        //ArrayList<User> values = new ArrayList<>(users.values());
+        //for(User user : values) {
+
+        //}
+
     }
 
     public String getCommand(int id){
@@ -58,12 +109,10 @@ public class Room {
                 return currentCommand;
 
             case "Индивидуальные комманды":
-
-                break;
+                return syncing(id); //Пытаемся синхронизировать
 
             default: return "Ошибка, данной команды не существует код: 11";
         }
-        return "Ошибка команды код: 22";
     }
 
     //Отображение всех хэшей пользователей для отладки
