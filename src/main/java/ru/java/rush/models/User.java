@@ -12,12 +12,17 @@ public class User {
         if(individualCommand.equals("Запуск")){
             individualCommand = "Кидай хэш";
             return "Запуск";
+        }else if(individualCommand.equals("Остановка")){
+            individualCommand = "Ожидаем синхронизации";
+            return "Остановка";
         }else{
             return individualCommand;
         }
     }
 
     public void setIndividualCommand(String individualCommand) {
+        if(individualCommand.equals("Остановка") && this.individualCommand.equals("Ожидаем синхронизации"))
+            return;
         this.individualCommand = individualCommand;
     }
 
