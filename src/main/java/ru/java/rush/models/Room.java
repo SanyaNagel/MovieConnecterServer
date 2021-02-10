@@ -76,16 +76,16 @@ public class Room {
         //Устанавливаем индивидуальные команды
         searchForLatecomer();
 
-        return values.get(id).individualCommand;
+        return values.get(id).getIndividualCommand();
     }
 
     // Поиск опоздавшего пользователя и
     // установка индивидуальных команд
     public void searchForLatecomer(){
-        //ArrayList<User> values = new ArrayList<>(users.values());
-        //for(User user : values) {
-
-        //}
+        ArrayList<User> values = new ArrayList<>(users.values());
+        for(User user : values) {
+            user.setIndividualCommand("Остановка");
+        }
 
     }
 
@@ -104,9 +104,25 @@ public class Room {
                         break;
                     }
                 }
-                if(start)
-                    currentCommand = "Кидай хэш";   //Все участники готовы и им даётся команда начать передачу хэшей
+                if(start) {
+                    currentCommand = "Запуск";   //Все участники готовы и им даётся команда начать передачу хэшей
+                    for(User user : values) {    //Устанавливаем индивидуальную команду "запуск" для каждого
+                        user.setIndividualCommand("Запуск");
+                    }
+                    return users.get(id).getIndividualCommand();    //Комманда - чтобы в клиенте сработал пробел
+                }
                 return currentCommand;
+
+            case "Запуск":
+                ArrayList<User> values2 = new ArrayList<>(users.values());
+                boolean ful = true; //Если все уже запущены
+                for(User user : values2) {
+                    if(user.getIndividualCommand().equals("Запуск"))    //Если какой то не запущен
+                        ful = false;
+                }
+                if(ful) //Если все запущены
+                    currentCommand = "Кидаем хэш";
+                return users.get(id).getIndividualCommand();
 
             case "Индивидуальные комманды":
                 return syncing(id); //Пытаемся синхронизировать

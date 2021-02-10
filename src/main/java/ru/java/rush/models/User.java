@@ -7,7 +7,21 @@ public class User {
     private String name;
     private final int id;
     private final MapQueue hash;  //Структура хранящая (время, хэш)
-    public String individualCommand = "Остановка";    //Индивидуальная команда для пользователя
+
+    public String getIndividualCommand() {
+        if(individualCommand.equals("Запуск")){
+            individualCommand = "Кидай хэш";
+            return "Запуск";
+        }else{
+            return individualCommand;
+        }
+    }
+
+    public void setIndividualCommand(String individualCommand) {
+        this.individualCommand = individualCommand;
+    }
+
+    private String individualCommand = "Остановка";    //Индивидуальная команда для пользователя
 
     public boolean isReady() {
         return ready;
