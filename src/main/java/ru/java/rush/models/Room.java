@@ -62,6 +62,7 @@ public class Room {
                     hashCurrent = user.getHasIx(j);
                     if(hashCurrent.snd.equals(pairCurrent.snd)){
                         ++be;
+                        break;
                     }
                 }
             }
