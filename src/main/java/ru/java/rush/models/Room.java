@@ -42,23 +42,23 @@ public class Room {
         if(user1.getSizeHashMap() < 20)
             return "Кидай хэш"; //Тогда пускай докидывает хэши
 
-        int sizeMap = user1.getSizeHashMap() - 1;
-        Pair<Long, String> pair1 = user1.getHasIx(sizeMap);
-        Pair<Long, String> pairCurrent = user1.getHasIx(sizeMap);
+        //int sizeMap = user1.getSizeHashMap() - 1;
+        Pair<Long, String> pair1 = user1.getHasIx(0);
+        Pair<Long, String> pairCurrent = user1.getHasIx(0);
         boolean synchroniz = false;
         Long maxTime = 3000l;
 
         // Берём первого пользователя и проверяем -
         // за последнюю секунду у всех пользователей имеется похожий хэш
-        for(int i = sizeMap; Math.abs(pair1.fst - pairCurrent.fst) > maxTime && i >= 0; --i){
+        for(int i = 0; Math.abs(pair1.fst - pairCurrent.fst) > maxTime; ++i){
             pairCurrent = user1.getHasIx(i);
             int be = 0;
 
             //Проверка - есть ли такой хэш в последней секунде у каждого пользователя
             for(User user : values){
-                Long hashFirst = user.getHasIx(sizeMap).fst;
-                Pair<Long, String> hashCurrent = user.getHasIx(sizeMap);
-                for(int j = sizeMap; Math.abs(hashFirst - hashCurrent.fst) > maxTime && j >=0; --j){
+                Long hashFirst = user.getHasIx(0).fst;
+                Pair<Long, String> hashCurrent = user.getHasIx(0);
+                for(int j = 0; Math.abs(hashFirst - hashCurrent.fst) > maxTime; ++j){
                     hashCurrent = user.getHasIx(j);
                     if(hashCurrent.snd.equals(pairCurrent.snd)){
                         ++be;
