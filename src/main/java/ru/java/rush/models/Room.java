@@ -157,7 +157,7 @@ public class Room {
         respons +="\n";
 
         ArrayList<User> values = new ArrayList<>(users.values());
-        for(int i = 50-1; i >= 0; --i){
+        for(int i = users.get(0).getSizeHashMap()-1; i >= 0; --i){
             for(User user : values){
                 Pair<Long, String> hashCurrent = user.getHasIx(i);
                 respons += hashCurrent.fst + "\t" + hashCurrent.snd;
