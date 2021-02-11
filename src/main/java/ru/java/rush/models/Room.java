@@ -160,7 +160,7 @@ public class Room {
         ArrayList<User> values = new ArrayList<>(users.values());
         for(int i = users.get(0).getSizeHashMap()-1; i >= 0; --i){
             for(User user : values){
-                if(user.getSizeHashMap()>= i){
+                if(user.getSizeHashMap()<= i){
                     respons += "null" + "\t\t\t\t" + "null";
                     respons += "\t\t\t";
                 }else{
