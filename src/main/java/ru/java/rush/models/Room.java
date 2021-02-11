@@ -46,7 +46,7 @@ public class Room {
         Pair<Long, String> pair1 = user1.getHasIx(0);
         Pair<Long, String> pairCurrent = user1.getHasIx(0);
         boolean synchroniz = false;
-        Long maxTime = 3000l;
+        Long maxTime = 4000l;
 
         // Берём первого пользователя и проверяем -
         // за последнюю секунду у всех пользователей имеется похожий хэш
