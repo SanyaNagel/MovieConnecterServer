@@ -50,7 +50,7 @@ public class Room {
 
         // Берём первого пользователя и проверяем -
         // за последнюю секунду у всех пользователей имеется похожий хэш
-        for(int i = 0; Math.abs(pair1.fst - pairCurrent.fst) > maxTime; ++i){
+        for(int i = 0; Math.abs(pair1.fst - pairCurrent.fst) < maxTime; ++i){
             pairCurrent = user1.getHasIx(i);
             int be = 0;
 
@@ -58,13 +58,15 @@ public class Room {
             for(User user : values){
                 Long hashFirst = user.getHasIx(0).fst;
                 Pair<Long, String> hashCurrent = user.getHasIx(0);
-                for(int j = 0; Math.abs(hashFirst - hashCurrent.fst) > maxTime; ++j){
+                for(int j = 0; Math.abs(hashFirst - hashCurrent.fst) < maxTime; ++j){
                     hashCurrent = user.getHasIx(j);
                     if(hashCurrent.snd.equals(pairCurrent.snd)){
                         ++be;
                         break;
                     }
                 }
+
+
             }
             if(be == values.size()) { //У всех пользователей нашёлся одинаковый хэш
                 synchroniz = true;
