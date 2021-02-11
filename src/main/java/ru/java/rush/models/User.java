@@ -7,6 +7,8 @@ public class User {
     private String name;
     private final int id;
     private final MapQueue hash;  //Структура хранящая (время, хэш)
+    private boolean ready = false; //Флаг готовности участника комнаты
+    private String individualCommand = "Остановка";    //Индивидуальная команда для пользователя
 
     public String getIndividualCommand() {
         if(individualCommand.equals("Запуск")){
@@ -20,19 +22,20 @@ public class User {
         }
     }
 
-    public void setIndividualCommand(String individualCommand) {
-        if(individualCommand.equals("Остановка") && this.individualCommand.equals("Ожидаем синхронизации"))
-            return;
-        this.individualCommand = individualCommand;
+    public boolean isEqualsIndividualCommand(String command){
+        return individualCommand.equals(command);
     }
 
-    private String individualCommand = "Остановка";    //Индивидуальная команда для пользователя
+    public void setIndividualCommand(String individualCommand) {
+        //Если пришла команда установить "Остановка" и текущая команда равна "Ожидаем синхронизации"
+        if(individualCommand.equals("Остановка") && this.individualCommand.equals("Ожидаем синхронизации"))
+            return;                                 //То это обозначаем что остановка уже выполнена и мы продолжаем ожилать
+        this.individualCommand = individualCommand; //Иначе остановка ещё не выполнялась и мы устанавливаем команду "Остановка" или иную команду
+    }
 
     public boolean isReady() {
         return ready;
     }
-
-    private boolean ready = false; //Флаг готовности усатника комнаты
 
     public User(String name, int number){
         this.name = name;

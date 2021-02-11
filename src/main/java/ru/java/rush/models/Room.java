@@ -121,7 +121,7 @@ public class Room {
                 ArrayList<User> values2 = new ArrayList<>(users.values());
                 boolean ful = true; //Если все уже запущены
                 for(User user : values2) {
-                    if(user.getIndividualCommand().equals("Запуск"))    //Если какой то не запущен
+                    if(user.isEqualsIndividualCommand("Запуск"))    //Если какой то не запущен
                         ful = false;
                 }
                 if(ful) //Если все запущены
