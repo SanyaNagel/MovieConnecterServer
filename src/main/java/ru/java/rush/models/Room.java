@@ -47,6 +47,9 @@ public class Room {
         Pair<Long, String> pairCurrent = user1.getHasIx(sizeMap);
         boolean synchroniz = false;
         Long maxTime = 3000l;
+
+        displayHashUsers();
+
         // Берём первого пользователя и проверяем -
         // за последнюю секунду у всех пользователей имеется похожий хэш
         for(int i = sizeMap; Math.abs(pair1.fst - pairCurrent.fst) > maxTime && i >= 0; --i){
