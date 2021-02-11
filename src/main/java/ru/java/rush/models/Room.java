@@ -48,8 +48,6 @@ public class Room {
         boolean synchroniz = false;
         Long maxTime = 3000l;
 
-        displayHashUsers();
-
         // Берём первого пользователя и проверяем -
         // за последнюю секунду у всех пользователей имеется похожий хэш
         for(int i = sizeMap; Math.abs(pair1.fst - pairCurrent.fst) > maxTime && i >= 0; --i){
@@ -162,9 +160,14 @@ public class Room {
         ArrayList<User> values = new ArrayList<>(users.values());
         for(int i = users.get(0).getSizeHashMap()-1; i >= 0; --i){
             for(User user : values){
-                Pair<Long, String> hashCurrent = user.getHasIx(i);
-                respons += hashCurrent.fst + "\t" + hashCurrent.snd;
-                respons += "\t\t\t";
+                if(user.getSizeHashMap()>= i){
+                    respons += "null" + "\t\t\t\t" + "null";
+                    respons += "\t\t\t";
+                }else{
+                    Pair<Long, String> hashCurrent = user.getHasIx(i);
+                    respons += hashCurrent.fst + "\t" + hashCurrent.snd;
+                    respons += "\t\t\t";
+                }
             }
             respons += "\n";
         }
