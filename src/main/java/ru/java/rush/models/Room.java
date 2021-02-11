@@ -45,9 +45,10 @@ public class Room {
         Pair<Long, String> pair1 = user1.getHasIx(0);
         Pair<Long, String> pairCurrent = user1.getHasIx(0);
         boolean synchroniz = false;
+        Long maxTime = 3000l;
         // Берём первого пользователя и проверяем -
         // за последнюю секунду у всех пользователей имеется похожий хэш
-        for(int i = 0; pair1.fst - pairCurrent.fst > 1000; ++i){
+        for(int i = 0; pair1.fst - pairCurrent.fst > maxTime; ++i){
             pairCurrent = user1.getHasIx(i);
             int be = 0;
 
@@ -55,7 +56,7 @@ public class Room {
             for(User user : values){
                 Long hashFirst = user.getHasIx(0).fst;
                 Pair<Long, String> hashCurrent = user.getHasIx(0);
-                for(int j = 0; hashFirst - hashCurrent.fst > 1000; ++j){
+                for(int j = 0; hashFirst - hashCurrent.fst > maxTime; ++j){
                     hashCurrent = user.getHasIx(j);
                     if(hashCurrent.snd.equals(pairCurrent.snd)){
                         ++be;
@@ -70,6 +71,9 @@ public class Room {
         // Усли все пользователи синхронизированы -
         // У всех нашёлся одинаковый хэш
         if(synchroniz){
+            if(currentCommand.equals("Индивидуальные комманды"))
+                play(id);
+
             currentCommand = "Кидай хэш"; //для всех устанавливае команду
             return "Кидай хэш"; //То можно продолжать работу
         }
@@ -109,11 +113,7 @@ public class Room {
                     }
                 }
                 if(start) {
-                    currentCommand = "Запуск";   //Все участники готовы и им даётся команда начать передачу хэшей
-                    for(User user : values) {    //Устанавливаем индивидуальную команду "запуск" для каждого
-                        user.setIndividualCommand("Запуск");
-                    }
-                    return users.get(id).getIndividualCommand();    //Комманда - чтобы в клиенте сработал пробел
+                    return play(id);
                 }
                 return currentCommand;
 
@@ -133,6 +133,16 @@ public class Room {
 
             default: return "Ошибка, данной команды не существует код: 11";
         }
+    }
+
+    public String play(int id){
+        ArrayList<User> values = new ArrayList<>(users.values());
+        currentCommand = "Запуск";   //Все участники готовы и им даётся команда начать передачу хэшей
+        for(User user : values) {    //Устанавливаем индивидуальную команду "запуск" для каждого
+            user.setIndividualCommand("Запуск");
+        }
+        return users.get(id).getIndividualCommand();    //Комманда - чтобы в клиенте сработал пробел
+
     }
 
     //Отображение всех хэшей пользователей для отладки
