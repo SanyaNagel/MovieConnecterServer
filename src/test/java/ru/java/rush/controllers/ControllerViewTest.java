@@ -10,7 +10,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import ru.java.rush.models.Room;
-import ru.java.rush.service.ControllerWork;
+import ru.java.rush.service.ProcessingRequests;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ public class ControllerViewTest {
     private String hash = "11111111";
 
     @Autowired
-    ControllerWork controllerWork;
+    ProcessingRequests processingRequests;
 
     @Autowired
     ControllerView controllerView;
@@ -49,7 +49,7 @@ public class ControllerViewTest {
 
     @Test
     void setHash() throws URISyntaxException {
-        List<Map.Entry<String, Room>> list = new ArrayList<>(controllerWork.getRooms().entrySet());
+        List<Map.Entry<String, Room>> list = new ArrayList<>(processingRequests.getRooms().entrySet());
         Map.Entry<String, Room> firstInsertedEntry = list.get(0);   //Получаем первую комнату
         String codeRoom = firstInsertedEntry.getKey();
 
@@ -63,7 +63,7 @@ public class ControllerViewTest {
 
     @Test
     public void setReady() throws URISyntaxException {
-        List<Map.Entry<String, Room>> list = new ArrayList<>(controllerWork.getRooms().entrySet());
+        List<Map.Entry<String, Room>> list = new ArrayList<>(processingRequests.getRooms().entrySet());
         Map.Entry<String, Room> firstInsertedEntry = list.get(0);   //Получаем первую комнату
         String codeRoom = firstInsertedEntry.getKey();
 
@@ -100,7 +100,7 @@ public class ControllerViewTest {
 
     @Test
     void login() throws URISyntaxException {
-        List<Map.Entry<String, Room>> list = new ArrayList<>(controllerWork.getRooms().entrySet());
+        List<Map.Entry<String, Room>> list = new ArrayList<>(processingRequests.getRooms().entrySet());
         Map.Entry<String, Room> firstInsertedEntry = list.get(0);   //Получаем первую комнату
         String codeRoom = firstInsertedEntry.getKey();
 
@@ -113,7 +113,7 @@ public class ControllerViewTest {
     }
 
     void viewHashs() {
-        List<Map.Entry<String, Room>> list = new ArrayList<>(controllerWork.getRooms().entrySet());
+        List<Map.Entry<String, Room>> list = new ArrayList<>(processingRequests.getRooms().entrySet());
         Map.Entry<String, Room> firstInsertedEntry = list.get(0);   //Получаем первую комнату
         String codeRoom = firstInsertedEntry.getKey();
 

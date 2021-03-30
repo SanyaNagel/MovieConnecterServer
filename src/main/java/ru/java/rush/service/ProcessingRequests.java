@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component("serverWork")
-public class ControllerWork {
+public class ProcessingRequests {
     private String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvxyz";
 
     private int ROOM_COUNT = 0;
@@ -22,7 +22,7 @@ public class ControllerWork {
         return rooms;
     }
 
-    public ControllerWork() {
+    public ProcessingRequests() {
 
     }
 

@@ -1,19 +1,14 @@
 package ru.java.rush.service;
 
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import ru.java.rush.models.Room;
-import ru.java.rush.models.structure.Pair;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class ControllerWorkTest {
+class ProcessingRequestsTest {
 
     @Autowired
-    private ControllerWork controllerWork;
+    private ProcessingRequests processingRequests;
 
     @Test
     void login() {

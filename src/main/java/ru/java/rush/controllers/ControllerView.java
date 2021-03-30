@@ -5,17 +5,17 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import ru.java.rush.service.ControllerWork;
+import ru.java.rush.service.ProcessingRequests;
 
 @RestController
 @RequestMapping("/server")
 public class ControllerView {
     @Autowired
-    ControllerWork controllerWork;
+    ProcessingRequests processingRequests;
 
     @PostMapping("/creatRoom/{NameAdmin}")
     public ResponseEntity<String> creatRoom(@PathVariable("NameAdmin") String name, Model model){
-        return controllerWork.creatRoom(name);
+        return processingRequests.creatRoom(name);
     }
 
     @PostMapping("/hash/{code}/{id}/{hash}")
@@ -23,7 +23,7 @@ public class ControllerView {
                           @PathVariable("id") int id,
                           @PathVariable("hash") String hash,
                           Model model){
-        return new ResponseEntity<>("{\"command\" : \""+ controllerWork.setHash(code,id,hash)+"\"}", HttpStatus.OK);
+        return new ResponseEntity<>("{\"command\" : \""+ processingRequests.setHash(code,id,hash)+"\"}", HttpStatus.OK);
     }
 
     //Подключение к комнате и добавление пользователя в комнату
@@ -31,7 +31,7 @@ public class ControllerView {
     public ResponseEntity<String> login(@PathVariable("code") String code,
                                         @PathVariable("name") String name,
                                         Model model){
-        return new ResponseEntity<>("{\"id\" : \""+ controllerWork.login(code,name)+"\"}", HttpStatus.OK);
+        return new ResponseEntity<>("{\"id\" : \""+ processingRequests.login(code,name)+"\"}", HttpStatus.OK);
     }
 
     //Отправка статуса готовности пользователя комнаты
@@ -39,14 +39,14 @@ public class ControllerView {
     public ResponseEntity<String> setReady(@PathVariable("code") String code,
                                                @PathVariable("id") int id,
                                                @PathVariable("flag") boolean ready){
-        controllerWork.setReadyUser(code,id,ready); //Отправляем юзеру статус готовности
+        processingRequests.setReadyUser(code,id,ready); //Отправляем юзеру статус готовности
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 
     //Отладка
     @PostMapping("/view/{code}")
     public ResponseEntity<String> viewHashs(@PathVariable("code") String code){
-        return new ResponseEntity<>("{\"debux\" : \""+controllerWork.displayHashs(code)+"\"}",HttpStatus.OK);
+        return new ResponseEntity<>("{\"debux\" : \""+ processingRequests.displayHashs(code)+"\"}",HttpStatus.OK);
     }
 
 }
