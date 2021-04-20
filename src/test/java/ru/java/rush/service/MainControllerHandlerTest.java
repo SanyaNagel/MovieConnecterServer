@@ -3,12 +3,13 @@ package ru.java.rush.service;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import ru.java.rush.handlers.MainControllerHandler;
 
 @SpringBootTest
-class ProcessingRequestsTest {
+class MainControllerHandlerTest {
 
     @Autowired
-    private ProcessingRequests processingRequests;
+    private MainControllerHandler mainControllerHandler;
 
     @Test
     void login() {

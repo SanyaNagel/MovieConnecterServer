@@ -1,4 +1,4 @@
-package ru.java.rush.service;
+package ru.java.rush.handlers;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Component("serverWork")
-public class ProcessingRequests {
+public class MainControllerHandler {
     private String AlphaNumericString = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789abcdefghijklmnopqrstuvxyz";
 
     private int ROOM_COUNT = 0;
@@ -22,7 +22,7 @@ public class ProcessingRequests {
         return rooms;
     }
 
-    public ProcessingRequests() {
+    public MainControllerHandler() {
 
     }
 

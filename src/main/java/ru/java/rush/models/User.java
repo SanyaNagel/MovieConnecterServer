@@ -1,5 +1,6 @@
 package ru.java.rush.models;
 
+import ru.java.rush.entities.UserCommands;
 import ru.java.rush.models.structure.MapQueue;
 import ru.java.rush.models.structure.Pair;
 
@@ -8,15 +9,15 @@ public class User {
     private final int id;
     private final MapQueue hash;  //Структура хранящая (время, хэш)
     private boolean ready = false; //Флаг готовности участника комнаты
-    private String individualCommand = "Остановка";    //Индивидуальная команда для пользователя
+    private String individualCommand = UserCommands.STOP.com;    //Индивидуальная команда для пользователя
 
     public String getIndividualCommand() {
-        if(individualCommand.equals("Запуск")){
-            individualCommand = "Кидай хэш";
-            return "Запуск";
-        }else if(individualCommand.equals("Остановка")){
-            individualCommand = "Ожидаем синхронизации";
-            return "Остановка";
+        if(individualCommand.equals(UserCommands.PLAY.com)){
+            individualCommand = UserCommands.SET_HASH.com;
+            return UserCommands.PLAY.com;
+        }else if(individualCommand.equals(UserCommands.STOP.com)){
+            individualCommand = UserCommands.WAITING_FOR_SYNCHRONIZATION.com;   //Ожидаем сихронизации
+            return UserCommands.STOP.com;
         }else{
             return individualCommand;
         }
@@ -28,7 +29,8 @@ public class User {
 
     public void setIndividualCommand(String individualCommand) {
         //Если пришла команда установить "Остановка" и текущая команда равна "Ожидаем синхронизации"
-        if(individualCommand.equals("Остановка") && this.individualCommand.equals("Ожидаем синхронизации"))
+        if(individualCommand.equals(UserCommands.STOP.com) &&
+                this.individualCommand.equals(UserCommands.WAITING_FOR_SYNCHRONIZATION.com))
             return;                                 //То это обозначаем что остановка уже выполнена и мы продолжаем ожилать
         this.individualCommand = individualCommand; //Иначе остановка ещё не выполнялась и мы устанавливаем команду "Остановка" или иную команду
     }
