@@ -1,12 +1,11 @@
 package ru.java.rush.handlers;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
-import ru.java.rush.models.Room;
+import ru.java.rush.entities.Room;
 import ru.java.rush.models.User;
+import ru.java.rush.synchronizers.SimpleSynchronizer;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,9 +25,9 @@ public class MainControllerHandler {
 
     }
 
-    public ResponseEntity<String> creatRoom(String userAdmin) {
+    public ResponseEntity<String> createRoom(String userAdmin) {
         String code = generationCodeRoom()+ROOM_COUNT++;    //Рандомный код + порядковый номер комнаты
-        Room room = new Room(code);
+        Room room = new SimpleSynchronizer(code);
         User user = room.setUser(userAdmin);
         rooms.put(code, room);
         return new ResponseEntity<>("{\"code\" : \""+code+"\", \"id\" : \""+user.getID()+"\"}", HttpStatus.OK);
@@ -59,7 +58,7 @@ public class MainControllerHandler {
 
 
     //Отображение всех хешей пользователей
-    public String displayHashs(String codeRoom){
-        return rooms.get(codeRoom).displayHashUsers();
+    public String displayHashes(String codeRoom){
+        return ((SimpleSynchronizer)rooms.get(codeRoom)).displayHashUsers();
     }
 }

@@ -1,17 +1,15 @@
 package ru.java.rush.models;
 
 import org.junit.Assert;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
+import ru.java.rush.entities.Room;
 import ru.java.rush.models.structure.Pair;
-
-import java.util.Map;
+import ru.java.rush.synchronizers.SimpleSynchronizer;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class RoomTest {
-    private Room room = new Room("code");
+    private Room room = new SimpleSynchronizer("code");
 
     @Test
     void setUser() {

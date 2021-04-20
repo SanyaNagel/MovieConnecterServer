@@ -9,7 +9,7 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import ru.java.rush.models.Room;
+import ru.java.rush.entities.Room;
 import ru.java.rush.handlers.MainControllerHandler;
 
 import java.net.URISyntaxException;

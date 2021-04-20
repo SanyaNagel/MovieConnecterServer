@@ -13,9 +13,9 @@ public class MainController {
     @Autowired
     MainControllerHandler mainControllerHandler;
 
-    @PostMapping("/creatRoom/{NameAdmin}")
-    public ResponseEntity<String> creatRoom(@PathVariable("NameAdmin") String name, Model model){
-        return mainControllerHandler.creatRoom(name);
+    @PostMapping("/createRoom/{NameAdmin}")
+    public ResponseEntity<String> createRoom(@PathVariable("NameAdmin") String name, Model model){
+        return mainControllerHandler.createRoom(name);
     }
 
     @PostMapping("/hash/{code}/{id}/{hash}")
@@ -46,7 +46,7 @@ public class MainController {
     //Отладка
     @PostMapping("/view/{code}")
     public ResponseEntity<String> viewHashs(@PathVariable("code") String code){
-        return new ResponseEntity<>("{\"debux\" : \""+ mainControllerHandler.displayHashs(code)+"\"}",HttpStatus.OK);
+        return new ResponseEntity<>("{\"debux\" : \""+ mainControllerHandler.displayHashes(code)+"\"}",HttpStatus.OK);
     }
 
 }
