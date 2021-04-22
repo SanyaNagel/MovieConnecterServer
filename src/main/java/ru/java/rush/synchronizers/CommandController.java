@@ -32,37 +32,16 @@ public abstract class CommandController extends Room {
         }
     }
 
-    //////////////////////////////Раскидать всё по функциям////////////////////////////
     public String runCommand(int id){
         switch (currentCommand){
             case "Кидай хэш":
                 return syncing(id);
 
             case "Ожидаем готовности всех":
-                //Проверяем готовы ли все
-                ArrayList<User> values = new ArrayList<>(users.values());
-                boolean start = true;
-                for(User user : values){
-                    if (!user.isReady()){   //Если какой то "из" не готов, то мы -
-                        start = false;      //Не запускаем
-                        break;
-                    }
-                }
-                if(start) {
-                    return play(id);
-                }
-                return currentCommand;
+                return waitingForReadiness(id);
 
             case "Запуск":
-                ArrayList<User> values2 = new ArrayList<>(users.values());
-                boolean ful = true; //Если все уже запущены
-                for(User user : values2) {
-                    if(user.isEqualsIndividualCommand("Запуск"))    //Если какой то не запущен
-                        ful = false;
-                }
-                if(ful) //Если все запущены
-                    currentCommand = "Кидай хэш";
-                return users.get(id).getIndividualCommand();
+                return restart(id);
 
             case "Индивидуальные комманды":
                 return syncing(id); //Пытаемся синхронизировать
@@ -80,4 +59,33 @@ public abstract class CommandController extends Room {
         return users.get(id).getIndividualCommand();    //Комманда - чтобы в клиенте сработал пробел
     }
 
+    //Ожидание готовности всех для первого запуска
+    public String waitingForReadiness(int id){
+        ArrayList<User> values = new ArrayList<>(users.values());
+        boolean start = true;
+        for(User user : values){
+            if (!user.isReady()){   //Если какой то "из" не готов, то мы -
+                start = false;      //Не запускаем
+                break;
+            }
+        }
+        if(start) {
+            return play(id);
+        }
+        return currentCommand;
+    }
+
+    //Функция для проверки готовности всех
+    //После того как кто то отвалился
+    public String restart(int id){
+        ArrayList<User> values2 = new ArrayList<>(users.values());
+        boolean ful = true; //Если все уже запущены
+        for(User user : values2) {
+            if(user.isEqualsIndividualCommand("Запуск"))    //Если какой то не запущен
+                ful = false;
+        }
+        if(ful) //Если все запущены
+            currentCommand = "Кидай хэш";
+        return users.get(id).getIndividualCommand();
+    }
 }
