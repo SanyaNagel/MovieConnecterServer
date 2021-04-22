@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Component;
 import ru.java.rush.entities.Room;
 import ru.java.rush.models.User;
-import ru.java.rush.synchronizers.SimpleSynchronizer;
+import ru.java.rush.synchronizers.simple.SimpleSynchronizer;
 
 import java.util.HashMap;
 import java.util.Map;

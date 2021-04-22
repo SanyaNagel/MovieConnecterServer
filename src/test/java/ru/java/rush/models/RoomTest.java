@@ -3,8 +3,8 @@ package ru.java.rush.models;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import ru.java.rush.entities.Room;
-import ru.java.rush.models.structure.Pair;
-import ru.java.rush.synchronizers.SimpleSynchronizer;
+import ru.java.rush.structure.Pair;
+import ru.java.rush.synchronizers.simple.SimpleSynchronizer;
 
 import static org.junit.jupiter.api.Assertions.*;
 

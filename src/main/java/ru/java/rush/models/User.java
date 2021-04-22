@@ -1,8 +1,8 @@
 package ru.java.rush.models;
 
 import ru.java.rush.entities.UserCommands;
-import ru.java.rush.models.structure.MapQueue;
-import ru.java.rush.models.structure.Pair;
+import ru.java.rush.structure.MapQueue;
+import ru.java.rush.structure.Pair;
 
 public class User {
     private String name;

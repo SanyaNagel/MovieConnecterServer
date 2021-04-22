@@ -2,11 +2,7 @@ package ru.java.rush.models;
 
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import ru.java.rush.models.structure.MapQueue;
-import ru.java.rush.models.structure.Pair;
-
-import static org.junit.jupiter.api.Assertions.*;
+import ru.java.rush.structure.Pair;
 
 class UserTest {
     private User user = new User("Name",0);

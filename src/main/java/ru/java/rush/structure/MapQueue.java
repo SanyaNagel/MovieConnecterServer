@@ -1,4 +1,4 @@
-package ru.java.rush.models.structure;
+package ru.java.rush.structure;
 
 
 import java.util.ArrayList;

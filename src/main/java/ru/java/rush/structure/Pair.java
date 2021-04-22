@@ -1,4 +1,4 @@
-package ru.java.rush.models.structure;
+package ru.java.rush.structure;
 
 public class Pair<A, B> {
 

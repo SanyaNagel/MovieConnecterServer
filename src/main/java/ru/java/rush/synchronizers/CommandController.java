@@ -1,4 +1,4 @@
-package ru.java.rush.synchronizers.simple;
+package ru.java.rush.synchronizers;
 
 import ru.java.rush.entities.Room;
 import ru.java.rush.entities.UserCommands;
@@ -7,73 +7,20 @@ import ru.java.rush.structure.Pair;
 
 import java.util.ArrayList;
 
-public class CommandController extends Room {
+public abstract class CommandController extends Room {
     public CommandController(String codeRoom){
         super(codeRoom);
     }
 
-    @Override
-    public String setHash(Integer id, String hash) {
-        return null;
-    }
-
     //Функция контроля синхронизации
+    public abstract String syncing(int id);
+
     @Override
-    public String syncing(int id){
-        //Проверим есть ли хотябы один одинаковый кадр за последнюю секунду
-        ArrayList<User> values = new ArrayList<>(users.values());
-        User user1 = values.get(0);
-
-        //Если у нас недостаточно хэшей т.е. прога только что запустилась
-        if(user1.getSizeHashMap() < 20)
-            return UserCommands.SET_HASH.com; //Тогда пускай докидывает хэши
-
-        //int sizeMap = user1.getSizeHashMap() - 1;
-        Pair<Long, String> pair1 = user1.getHasIx(0);
-        Pair<Long, String> pairCurrent = user1.getHasIx(0);
-        boolean synchroniz = false;
-        long maxTime = 4000L;
-
-        // Берём первого пользователя и проверяем -
-        // за последнюю секунду у всех пользователей имеется похожий хэш
-        for(int i = 0; Math.abs(pair1.fst - pairCurrent.fst) < maxTime; ++i){
-            pairCurrent = user1.getHasIx(i);
-            int be = 0;
-
-            //Проверка - есть ли такой хэш в последней секунде у каждого пользователя
-            for(User user : values){
-                Long hashFirst = user.getHasIx(0).fst;
-                Pair<Long, String> hashCurrent = user.getHasIx(0);
-                for(int j = 0; Math.abs(hashFirst - hashCurrent.fst) < maxTime; ++j){
-                    hashCurrent = user.getHasIx(j);
-                    if(hashCurrent.snd.equals(pairCurrent.snd)){
-                        ++be;
-                        break;
-                    }
-                }
-            }
-            if(be == values.size()) { //У всех пользователей нашёлся одинаковый хэш
-                synchroniz = true;
-                break;
-            }
-        }
-        // Усли все пользователи синхронизированы -
-        // У всех нашёлся одинаковый хэш
-        if(synchroniz){
-            if(currentCommand.equals("Индивидуальные комманды"))
-                play(id);
-
-            currentCommand = "Кидай хэш"; //для всех устанавливае команду
-            return "Кидай хэш"; //То можно продолжать работу
-        }
-
-        //Иначе устанавливаем команды для каждого пользователя
-        currentCommand = "Индивидуальные комманды";
-
-        //Устанавливаем индивидуальные команды
-        searchForLatecomer();
-
-        return values.get(id).getIndividualCommand();
+    public String setHash(Integer id, String hash){
+        String command = runCommand(id);
+        if(command.equals(UserCommands.SET_HASH.com))  //Если можно сохранять хэш то записываем его
+            users.get(id).setHash(System.currentTimeMillis(),hash);
+        return command;
     }
 
     // Поиск опоздавшего пользователя и
@@ -81,12 +28,12 @@ public class CommandController extends Room {
     public void searchForLatecomer(){
         ArrayList<User> values = new ArrayList<>(users.values());
         for(User user : values) {
-            user.setIndividualCommand("Остановка");
+            user.setIndividualCommand(UserCommands.STOP.com);
         }
-
     }
 
-    public String getCommand(int id){
+    //////////////////////////////Раскидать всё по функциям////////////////////////////
+    public String runCommand(int id){
         switch (currentCommand){
             case "Кидай хэш":
                 return syncing(id);
@@ -126,12 +73,11 @@ public class CommandController extends Room {
 
     public String play(int id){
         ArrayList<User> values = new ArrayList<>(users.values());
-        currentCommand = "Запуск";   //Все участники готовы и им даётся команда начать передачу хэшей
+        currentCommand = UserCommands.PLAY.com;   //Все участники готовы и им даётся команда начать передачу хэшей
         for(User user : values) {    //Устанавливаем индивидуальную команду "запуск" для каждого
-            user.setIndividualCommand("Запуск");
+            user.setIndividualCommand(UserCommands.PLAY.com);
         }
         return users.get(id).getIndividualCommand();    //Комманда - чтобы в клиенте сработал пробел
-
     }
 
 }
