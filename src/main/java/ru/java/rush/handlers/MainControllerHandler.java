@@ -56,7 +56,6 @@ public class MainControllerHandler {
         rooms.get(codeRoom).getUsers().get(id).setReady(ready);
     }
 
-
     //Отображение всех хешей пользователей
     public String displayHashes(String codeRoom){
         return ((SimpleSynchronizer)rooms.get(codeRoom)).displayHashUsers();

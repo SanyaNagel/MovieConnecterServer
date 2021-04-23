@@ -2,9 +2,11 @@ package ru.java.rush.structure;
 
 
 import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.List;
 
 //Структура хранящая очередь пар - map очередь
-public class MapQueue extends ArrayList<Pair<Long, String>>{
+public class MapQueue extends LinkedList<Pair<Long, String>> {
     private int maxSize;
 
     public MapQueue(int size){
@@ -12,10 +14,10 @@ public class MapQueue extends ArrayList<Pair<Long, String>>{
     }
 
     @Override
-    public boolean add(Pair<Long, String> longStringPair) {
+    public void addLast(Pair<Long, String> longStringPair) {
         if(super.size() >= maxSize){
-            super.remove(0);
+            super.pollFirst();
         }
-        return super.add(longStringPair);
+        super.addLast(longStringPair);
     }
 }
