@@ -12,54 +12,28 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class SimpleSynchronizer extends CommandController {
+    private ArrayList<User> values;
 
-    public SimpleSynchronizer(String code){
+    public SimpleSynchronizer(String code) {
         super(code);
     }
 
     @Override
-    public String syncing(int id){
+    public String syncing(int id) {
         //Проверим есть ли хотябы один одинаковый кадр за последнюю секунду
-        ArrayList<User> values = new ArrayList<>(users.values());
-        User user1 = values.get(0);
+        values = new ArrayList<>(users.values());
+        User firstUser = values.get(0);
 
         //Если у нас недостаточно хэшей т.е. прога только что запустилась
-        if(user1.getSizeHashMap() < 20)
+        if (firstUser.getSizeHashMap() < 20)
             return UserCommands.SET_HASH.com; //Тогда пускай докидывает хэши
 
-        //int sizeMap = user1.getSizeHashMap() - 1;
-        Pair<Long, String> pair1 = user1.getHasIx(0);
-        Pair<Long, String> pairCurrent = user1.getHasIx(0);
-        boolean synchroniz = false;
-        long maxTime = 4000L;
+        boolean synchronize = isAllUserHash();
 
-        // Берём первого пользователя и проверяем -
-        // за последнюю секунду у всех пользователей имеется похожий хэш
-        for(int i = 0; Math.abs(pair1.fst - pairCurrent.fst) < maxTime; ++i){
-            pairCurrent = user1.getHasIx(i);
-            int be = 0;
-
-            //Проверка - есть ли такой хэш в последней секунде у каждого пользователя
-            for(User user : values){
-                Long hashFirst = user.getHasIx(0).fst;
-                Pair<Long, String> hashCurrent = user.getHasIx(0);
-                for(int j = 0; Math.abs(hashFirst - hashCurrent.fst) < maxTime; ++j){
-                    hashCurrent = user.getHasIx(j);
-                    if(hashCurrent.snd.equals(pairCurrent.snd)){
-                        ++be;
-                        break;
-                    }
-                }
-            }
-            if(be == values.size()) { //У всех пользователей нашёлся одинаковый хэш
-                synchroniz = true;
-                break;
-            }
-        }
-        // Усли все пользователи синхронизированы -
+        // Если все пользователи синхронизированы -
         // У всех нашёлся одинаковый хэш
-        if(synchroniz){
-            if(currentCommand.equals("Индивидуальные комманды"))
+        if (synchronize) {
+            if (currentCommand.equals("Индивидуальные комманды"))
                 play(id);
 
             currentCommand = "Кидай хэш"; //для всех устанавливае команду
@@ -75,24 +49,59 @@ public class SimpleSynchronizer extends CommandController {
         return values.get(id).getIndividualCommand();
     }
 
+    // Проверка, у всех юзеров имеется хотябы один одинаковый
+    // хэш за определённый интервал времени?
+    public boolean isAllUserHash() {
+        User firstUser = values.get(0);
+        Pair<Long, String> pair1 = firstUser.getHasIx(0);
+        Pair<Long, String> pairCurrent = firstUser.getHasIx(0);
+
+        final long maxTime = 2000L;
+        for (int i = 0; Math.abs(pair1.fst - pairCurrent.fst) < maxTime; ++i) {
+            pairCurrent = firstUser.getHasIx(i);
+            int be = 0;
+
+            //Проверка - есть ли такой хэш в последней секунде у каждого пользователя
+            for (User user : values) {
+                Long hashFirst = user.getHasIx(0).fst;
+                Pair<Long, String> hashCurrent = user.getHasIx(0);
+                for (int j = 0; Math.abs(hashFirst - hashCurrent.fst) < maxTime; ++j) {
+                    hashCurrent = user.getHasIx(j);
+                    if (hashEquals(hashCurrent.snd, pairCurrent.snd)) {
+                        ++be;
+                        break;
+                    }
+                }
+            }
+            if (be == values.size()) { //У всех пользователей нашёлся одинаковый хэш
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //функция нормированного расстояния хемминга
+    private boolean hashEquals(String h1, String h2) {
+        return true;
+    }
 
     //Отображение всех хэшей пользователей для отладки
-    public String displayHashUsers(){
+    public String displayHashUsers() {
         Set<Integer> keys = users.keySet();
         String respons = "";
-        for(Integer id : keys){
-            respons += "\t\t\t\t\t\t\t"+id;
+        for (Integer id : keys) {
+            respons += "\t\t\t\t\t\t\t" + id;
         }
 
-        respons +="\n";
+        respons += "\n";
 
         ArrayList<User> values = new ArrayList<>(users.values());
-        for(int i = users.get(0).getSizeHashMap()-1; i >= 0; --i){
-            for(User user : values){
-                if(user.getSizeHashMap()<= i){
+        for (int i = users.get(0).getSizeHashMap() - 1; i >= 0; --i) {
+            for (User user : values) {
+                if (user.getSizeHashMap() <= i) {
                     respons += "null" + "\t\t\t\t" + "null";
                     respons += "\t\t\t";
-                }else{
+                } else {
                     Pair<Long, String> hashCurrent = user.getHasIx(i);
                     respons += hashCurrent.fst + "\t" + hashCurrent.snd;
                     respons += "\t\t\t";

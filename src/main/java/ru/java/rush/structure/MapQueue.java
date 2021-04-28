@@ -7,7 +7,7 @@ import java.util.List;
 
 //Структура хранящая очередь пар - map очередь
 public class MapQueue extends LinkedList<Pair<Long, String>> {
-    private int maxSize;
+    private final int maxSize;
 
     public MapQueue(int size){
         this.maxSize = size;
