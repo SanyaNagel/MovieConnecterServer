@@ -87,30 +87,22 @@ public class SimpleSynchronizer extends CommandController {
 
     //Отображение всех хэшей пользователей для отладки
     public String displayHashUsers() {
-        Set<Integer> keys = users.keySet();
-        String respons = "";
-        for (Integer id : keys) {
-            respons += "\t\t\t\t\t\t\t" + id;
-        }
-
-        respons += "\n";
-
+        String response = "";
         ArrayList<User> values = new ArrayList<>(users.values());
         for (int i = users.get(0).getSizeHashMap() - 1; i >= 0; --i) {
             for (User user : values) {
                 if (user.getSizeHashMap() <= i) {
-                    respons += "null" + "\t\t\t\t" + "null";
-                    respons += "\t\t\t";
+                    response += user.getID() + ": null" + "\t\t\t\t" + "null\n";
                 } else {
                     Pair<Long, String> hashCurrent = user.getHasIx(i);
-                    respons += hashCurrent.fst + "\t" + hashCurrent.snd;
-                    respons += "\t\t\t";
+                    response += user.getID()+":"+ hashCurrent.snd + "\t" + hashCurrent.fst + "\n";
                 }
             }
-            respons += "\n";
+            response += "\n";
         }
-        LogManager.getLogger(this.getClass()).info(respons);
-        return respons;
+
+        LogManager.getLogger(this.getClass()).info(response);
+        return response;
     }
 
 }
