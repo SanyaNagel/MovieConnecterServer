@@ -1,9 +1,11 @@
 package ru.java.rush.synchronizers;
 
+import org.apache.logging.log4j.LogManager;
 import ru.java.rush.entities.Room;
 import ru.java.rush.entities.UserCommands;
 import ru.java.rush.models.User;
 import ru.java.rush.structure.Pair;
+import ru.java.rush.synchronizers.simple.SimpleSynchronizer;
 
 import java.util.ArrayList;
 
@@ -17,6 +19,7 @@ public abstract class CommandController extends Room {
 
     @Override
     public String setHash(Integer id, String hash){
+        LogManager.getLogger(SimpleSynchronizer.class).info(id.toString() +" "+ hash);
         String command = runCommand(id);
         if(command.equals(UserCommands.SET_HASH.com))  //Если можно сохранять хэш то записываем его
             users.get(id).setHash(System.currentTimeMillis(),hash);
