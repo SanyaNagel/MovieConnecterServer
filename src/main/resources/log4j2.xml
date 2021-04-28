@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+        <RollingFile name="rootFile"
+                     fileName="logs/root.log"
+                     filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval = "1" />
+                <SizeBasedTriggeringPolicy
+                        size="1 MB" />
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="SimpleSynchronizer"
+                     fileName="logs/SimpleSynchronizer.log"
+                     filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval = "1" />
+                <SizeBasedTriggeringPolicy
+                        size="1 MB" />
+            </Policies>
+        </RollingFile>
+
+        <RollingFile name="PHashSynchronizer"
+                     fileName="logs/PHashSynchronizer.log"
+                     filePattern="logs/$${date:yyyy-MM}/app-%d{MM-dd-yyyy}-%i.log.gz">
+            <PatternLayout>
+                <Pattern>%d %p %c{1.} [%t] %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval = "1" />
+                <SizeBasedTriggeringPolicy
+                        size="1 MB" />
+            </Policies>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name= "ru.java.rush.synchronizers.simple.SimpleSynchronizer" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="SimpleSynchronizer"/>
+        </Logger>
+
+        <Logger name= "ru.java.rush.synchronizers.phash.PHashSynchronizer" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="PHashSynchronizer"/>
+        </Logger>
+
+        <Root level="debug">
+            <AppenderRef ref="rootFile" />
+        </Root>
+    </Loggers>
+</Configuration>

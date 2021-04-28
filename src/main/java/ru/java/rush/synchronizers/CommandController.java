@@ -81,11 +81,11 @@ public abstract class CommandController extends Room {
         ArrayList<User> values2 = new ArrayList<>(users.values());
         boolean ful = true; //Если все уже запущены
         for(User user : values2) {
-            if(user.isEqualsIndividualCommand("Запуск"))    //Если какой то не запущен
+            if(user.isEqualsIndividualCommand(UserCommands.PLAY.com))    //Если какой то не запущен
                 ful = false;
         }
         if(ful) //Если все запущены
-            currentCommand = "Кидай хэш";
+            currentCommand = UserCommands.SET_HASH.com;
         return users.get(id).getIndividualCommand();
     }
 }

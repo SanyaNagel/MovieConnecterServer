@@ -1,5 +1,6 @@
 package ru.java.rush.controllers;
 
+import org.apache.logging.log4j.LogManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,6 +16,7 @@ public class MainController {
 
     @PostMapping("/createRoom/{NameAdmin}")
     public ResponseEntity<String> createRoom(@PathVariable("NameAdmin") String name, Model model){
+        LogManager.getRootLogger().debug("Принят запрос на создание комнаты "+name);
         return mainControllerHandler.createRoom(name);
     }
 
@@ -23,29 +25,33 @@ public class MainController {
                           @PathVariable("id") int id,
                           @PathVariable("hash") String hash,
                           Model model){
+        LogManager.getRootLogger().debug("Принят хэш "+hash+" от пользователя: "+id+" комната: "+ code);
         return new ResponseEntity<>("{\"command\" : \""+ mainControllerHandler.setHash(code,id,hash)+"\"}", HttpStatus.OK);
     }
 
-    //РџРѕРґРєР»СЋС‡РµРЅРёРµ Рє РєРѕРјРЅР°С‚Рµ Рё РґРѕР±Р°РІР»РµРЅРёРµ РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РІ РєРѕРјРЅР°С‚Сѓ
+    //Подключение к комнате и добавление пользователя в комнату
     @PostMapping("/login/{code}/{name}")
     public ResponseEntity<String> login(@PathVariable("code") String code,
                                         @PathVariable("name") String name,
                                         Model model){
+        LogManager.getRootLogger().debug("Принят запрос на добавление пользователя "+name+" в комнату:"+code);
         return new ResponseEntity<>("{\"id\" : \""+ mainControllerHandler.login(code,name)+"\"}", HttpStatus.OK);
     }
 
-    //РћС‚РїСЂР°РІРєР° СЃС‚Р°С‚СѓСЃР° РіРѕС‚РѕРІРЅРѕСЃС‚Рё РїРѕР»СЊР·РѕРІР°С‚РµР»СЏ РєРѕРјРЅР°С‚С‹
+    //Отправка статуса готовности пользователя комнаты
     @PutMapping("/ready/{code}/{id}/{flag}")
     public ResponseEntity<String> setReady(@PathVariable("code") String code,
                                                @PathVariable("id") int id,
                                                @PathVariable("flag") boolean ready){
-        mainControllerHandler.setReadyUser(code,id,ready); //РћС‚РїСЂР°РІР»СЏРµРј СЋР·РµСЂСѓ СЃС‚Р°С‚СѓСЃ РіРѕС‚РѕРІРЅРѕСЃС‚Рё
+        LogManager.getRootLogger().debug("Принят на обработку статус готовности id:"+id+" code:"+code+" flag:"+ready);
+        mainControllerHandler.setReadyUser(code,id,ready); //Отправляем юзеру статус готовности
         return new ResponseEntity<>("",HttpStatus.OK);
     }
 
-    //РћС‚Р»Р°РґРєР°
+    //Отладка
     @PostMapping("/view/{code}")
     public ResponseEntity<String> viewHashs(@PathVariable("code") String code){
+        LogManager.getRootLogger().debug("Принят запрос на отображение хэшей для отладки");
         return new ResponseEntity<>("{\"debux\" : \""+ mainControllerHandler.displayHashes(code)+"\"}",HttpStatus.OK);
     }
 

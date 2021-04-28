@@ -1,5 +1,8 @@
 package ru.java.rush.synchronizers.simple;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+import org.apache.logging.log4j.Level;
 import ru.java.rush.entities.UserCommands;
 import ru.java.rush.models.User;
 import ru.java.rush.structure.Pair;
@@ -97,7 +100,7 @@ public class SimpleSynchronizer extends CommandController {
             }
             respons += "\n";
         }
-        System.out.println(respons);
+        LogManager.getLogger(this.getClass()).info(respons);
         return respons;
     }
 
